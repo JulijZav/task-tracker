@@ -3,6 +3,8 @@ services:
     build: .
     ports:
       - "8000:8000"
+    volumes:
+      - .:/app
     environment:
       - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/tasktracker
     depends_on:
