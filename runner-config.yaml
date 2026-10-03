@@ -1,7 +1,6 @@
 container:
   network: task-tracker_default
-  force_pull: false
 
 runner:
   labels:
-    - "ubuntu-latest:docker://node:20-bookworm"
+    - "ubuntu-latest:docker://python:3.11-slim"
