@@ -38,11 +38,11 @@ services:
     environment:
       - GITEA_INSTANCE_URL=http://gitea:3000
       - GITEA_RUNNER_REGISTRATION_TOKEN=Fv1VBNVSlcjGjt5Y3XXSbu1FAhs6ljKbYBbQpet0
-      - CONFIG_FILE=/data/config.yaml
+      - CONFIG_FILE=/config.yaml
     volumes:
       - /Users/julij/.docker/run/docker.sock:/var/run/docker.sock
       - runner_data:/data
-      - ./runner-config.yaml:/data/config.yaml
+      - ./runner-config.yaml:/config.yaml
 
 volumes:
   pgdata:
