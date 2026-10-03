@@ -21,5 +21,25 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  gitea:
+    image: gitea/gitea:1.22
+    ports:
+      - "3000:3000"
+    environment:
+      - GITEA__actions__ENABLED=true
+    volumes:
+      - gitea_data:/data
+
+  runner:
+    image: gitea/act_runner:latest
+    depends_on:
+      - gitea
+    environment:
+      - GITEA_INSTANCE_URL=http://gitea:3000
+      - GITEA_RUNNER_REGISTRATION_TOKEN=Wlv7z3mzxqLDVHTr4njbUwTzIDzSjIzPEIdRd8kW
+    volumes:
+      - /Users/julij/.docker/run/docker.sock:/var/run/docker.sock
+
 volumes:
   pgdata:
+  gitea_data:
