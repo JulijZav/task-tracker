@@ -34,7 +34,7 @@ def update_task(task_id: int, task_data: TaskUpdate, db: Session = Depends(get_d
 
     if task_data.title is not None:
         task.title = task_data.title
-    if task.data.description is not None:
+    if task_data.description is not None:
         task.description = task_data.description
     if task_data.completed is not None:
         task.completed = task_data.completed

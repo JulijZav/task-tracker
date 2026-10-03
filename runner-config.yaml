@@ -1,8 +1,2 @@
-runner:
-  labels:
-    - "ubuntu-latest"
-    - "ubuntu-24.04"
-    - "ubuntu-22.04"
-
 container:
   network: task-tracker_default
