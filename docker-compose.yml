@@ -36,7 +36,7 @@ services:
       - gitea
     environment:
       - GITEA_INSTANCE_URL=http://gitea:3000
-      - GITEA_RUNNER_REGISTRATION_TOKEN=Wlv7z3mzxqLDVHTr4njbUwTzIDzSjIzPEIdRd8kW
+      - GITEA_RUNNER_REGISTRATION_TOKEN=Fv1VBNVSlcjGjt5Y3XXSbu1FAhs6ljKbYBbQpet0
     volumes:
       - /Users/julij/.docker/run/docker.sock:/var/run/docker.sock
 
