@@ -3,4 +3,4 @@ container:
 
 runner:
   labels:
-    - "ubuntu-latest:docker://python:3.11-slim"
+    - "ubuntu-latest:docker://docker.gitea.com/runner-images:ubuntu-latest"

@@ -9,5 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install ruff
-      - run: ruff check app/%
+      - run: apt-get update && apt-get install -y python3-pip
+      - run: pip3 install ruff --break-system-packages
+      - run: ruff check app/
