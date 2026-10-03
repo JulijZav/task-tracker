@@ -1,14 +1,18 @@
 from datetime import datetime
+
 from pydantic import BaseModel
+
 
 class TaskCreate(BaseModel):
     title: str
     description: str | None = None
 
+
 class TaskUpdate(BaseModel):
-    title: str
+    title: str | None = None
     description: str | None = None
     completed: bool | None = None
+
 
 class TaskResponse(BaseModel):
     id: int
