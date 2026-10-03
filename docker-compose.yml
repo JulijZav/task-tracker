@@ -1,13 +1,47 @@
-name: CI
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/tasktracker
+    depends_on:
+      - db
 
-on:
-  push:
-    branches: [main]
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=tasktracker
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
-jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: pip install ruff
-      - run: ruff check app/
+  gitea:
+    image: gitea/gitea:1.23
+    ports:
+      - "3000:3000"
+    environment:
+      - GITEA__actions__ENABLED=true
+    volumes:
+      - gitea_data:/data
+
+  runner:
+    image: gitea/act_runner:latest
+    depends_on:
+      - gitea
+    environment:
+      - GITEA_INSTANCE_URL=http://gitea:3000
+      - GITEA_RUNNER_REGISTRATION_TOKEN=Fv1VBNVSlcjGjt5Y3XXSbu1FAhs6ljKbYBbQpet0
+    volumes:
+      - /Users/julij/.docker/run/docker.sock:/var/run/docker.sock
+      - runner_data:/data
+
+volumes:
+  pgdata:
+  gitea_data:
+  runner_data:
