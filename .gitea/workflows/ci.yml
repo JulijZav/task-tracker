@@ -25,3 +25,10 @@ jobs:
         env:
           DATABASE_URL: sqlite:///./test.db
           PYTHONPATH: .
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t task-tracker .
