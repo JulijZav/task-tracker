@@ -32,3 +32,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t task-tracker .
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: build production image
+        run: docker build -t task-tracker:latest .
+      - name: Deploy with OpenTofu
+        run: |
+          cd terraform
+          tofu init
+          tofu apply -auto-approve
