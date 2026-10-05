@@ -43,6 +43,10 @@ jobs:
       - name: Install OpenTofu
         run: |
           curl -fsSL https://get.opentofu.org/install-opentofu.sh | sh -s -- --install-method standalone
+      - name: Clean old deployment
+        run: |
+          docker rm -f task-tracker-prod-app task-tracker-prod-db 2>/dev/null || true
+          docker network rm task-tracker-prod 2>/dev/null || true
       - name: Deploy with OpenTofu
         run: |
           cd terraform
