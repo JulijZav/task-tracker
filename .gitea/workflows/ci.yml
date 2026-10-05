@@ -40,6 +40,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: build production image
         run: docker build -t task-tracker:latest .
+      - name: Install OpenTofu
+        run: |
+          curl -fsSL https://get.opentofu.org/install-opentofu.sh | sh -s -- --install-method standalone
       - name: Deploy with OpenTofu
         run: |
           cd terraform
