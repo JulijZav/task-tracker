@@ -24,6 +24,12 @@ graph LR
     Graf -->|alert| Discord
 ```
 
+## Screenshots
+
+![Grafana Dashboard](docs/grafana.png)
+
+![CI Pipeline](docs/pipeline.png)
+
 ## Tech Stack
 
 | Layer            | Tool                         |
@@ -102,9 +108,3 @@ docker compose up --build
 | `DELETE` | `/tasks/{id}`     | Delete a task      |
 | `GET`    | `/health`         | Health check       |
 | `GET`    | `/metrics`        | Prometheus metrics |
-
-## Screenshots
-
-![Grafana Dashboard](docs/grafana.png)
-
-![CI Pipeline](docs/pipeline.png)
