@@ -6,12 +6,20 @@ monitoring, SLOs and incident management.
 
 ## Architecture
 
-push → Gitea → act_runner → lint → test → build → deploy (OpenTofu)
-                                                        ↓
-                              Discord ← Grafana ← Prometheus ← FastAPI ← PostgreSQL
-                                                        ↑
-                                                      k3s cluster
-
+```mermaid
+graph LR
+    Dev[Developer] -->|push| Gitea
+    Gitea -->|webhook| Runner[act_runner]
+    Runner --> Lint
+    Runner --> Test
+    Runner --> Build
+    Build -->|deploy| OpenTofu
+    OpenTofu --> App[FastAPI :8000]
+    App --> DB[PostgreSQL]
+    App -->|/metrics| Prom[Prometheus]
+    Prom --> Graf[Grafana]
+    Graf -->|alert| Discord
+```
 
 ## Tech Stack
 
