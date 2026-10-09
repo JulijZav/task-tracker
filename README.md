@@ -1,3 +1,7 @@
+[![CI](https://github.com/JulijZav/task-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/JulijZav/task-tracker/actions/workflows/ci.yml)
+
+# Task Tracker — Self-Hosted CI/CD Portfolio
+
 # Task Tracker — Self-Hosted CI/CD Portfolio
 
 A task management API built with FastAPI and PostgreSQL, wrapped in a
