@@ -44,3 +44,15 @@ def test_delete_task():
 def test_get_nonexistent_task():
     response = client.get("/tasks/99999")
     assert response.status_code == 404
+
+def test_metrics_use_router_template():
+    create = client.post("/tasks/", json={"title": "Metrics task"})
+    task_id = create.json()["id"]
+    client.get(f"/tasks/{task_id}")
+    client.get("/does-not-exist")
+
+    body = client.get("/metrics").text
+
+    assert 'endpoint="/tasks/{task_id}"' in body
+    assert f'endpoint="/tasks/{task_id}"' not in body
+    assert 'endpoint="unmatched"' in body

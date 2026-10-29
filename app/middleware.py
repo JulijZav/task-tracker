@@ -15,9 +15,14 @@ REQUEST_DURATION = Histogram(
     buckets=[0.01, 0.05, 0.1, 0.3, 0.5, 1.0, 5.0]
 )
 
+def get_endpoint_label(request):
+    route = request.scope.get("route")
+    if route is None:
+        return "unmatched"
+    return route.path
 
 async def metrics_middleware(request, call_next):
-    start_time = time.time()
+    start_time = time.perf_counter()
 
     try:
         response = await call_next(request)
@@ -26,17 +31,18 @@ async def metrics_middleware(request, call_next):
         status_code = 500
         raise
     finally:
-        duration = time.time() - start_time
+        duration = time.perf_counter() - start_time
+        endpoint = get_endpoint_label(request)
 
         REQUEST_COUNT.labels(
             method=request.method,
-            endpoint=request.url.path,
+            endpoint=endpoint,
             status_code=status_code
         ).inc()
 
         REQUEST_DURATION.labels(
             method=request.method,
-            endpoint=request.url.path
+            endpoint=endpoint
         ).observe(duration)
 
     return response
