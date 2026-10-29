@@ -53,6 +53,6 @@ def test_metrics_use_router_template():
 
     body = client.get("/metrics").text
 
-    assert 'endpoint="/tasks/{task_id}"' in body
-    assert f'endpoint="/tasks/{task_id}"' not in body
-    assert 'endpoint="unmatched"' in body
+    assert 'route="/tasks/{task_id}"' in body
+    assert f'route="/tasks/{task_id}"' not in body
+    assert 'route="unmatched"' in body

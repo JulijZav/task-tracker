@@ -5,17 +5,17 @@ from prometheus_client import Counter, Histogram
 REQUEST_COUNT = Counter(
     "http_requests_total",
     "Total number of HTTP requests",
-    ["method", "endpoint", "status_code"]
+    ["method", "route", "status_code"]
 )
 
 REQUEST_DURATION = Histogram(
     "http_request_duration_seconds",
     "HTTP request duration in seconds",
-    ["method", "endpoint"],
+    ["method", "route"],
     buckets=[0.01, 0.05, 0.1, 0.3, 0.5, 1.0, 5.0]
 )
 
-def get_endpoint_label(request):
+def get_route_label(request):
     route = request.scope.get("route")
     if route is None:
         return "unmatched"
@@ -32,17 +32,17 @@ async def metrics_middleware(request, call_next):
         raise
     finally:
         duration = time.perf_counter() - start_time
-        endpoint = get_endpoint_label(request)
+        route = get_route_label(request)
 
         REQUEST_COUNT.labels(
             method=request.method,
-            endpoint=endpoint,
+            route=route,
             status_code=status_code
         ).inc()
 
         REQUEST_DURATION.labels(
             method=request.method,
-            endpoint=endpoint
+            route=route
         ).observe(duration)
 
     return response
