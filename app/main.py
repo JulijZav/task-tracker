@@ -1,12 +1,15 @@
 from fastapi import FastAPI
 from prometheus_client import generate_latest
 
-from app.middleware import metrics_middleware
+from app.config import settings
+from app.logging_config import setup_logging
+from app.middleware import request_middleware
 from app.routers import tasks
 
+setup_logging(settings.log_level)
 app = FastAPI(title="Task Tracker API")
 
-app.middleware("http")(metrics_middleware)
+app.middleware("http")(request_middleware)
 
 app.include_router(tasks.router)
 
